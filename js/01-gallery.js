@@ -6,9 +6,10 @@ const galleryRef = document.querySelector('.gallery');
 const galleryItemsMarkup = createGalleryItem(galleryItems);
 galleryRef.innerHTML = galleryItemsMarkup;
 
-galleryRef.addEventListener('click', onItemClick);
+const modalMarkup = basicLightbox.create(`<img width="800" height="600">`);
+const modalImageRef = modalMarkup.element().querySelector('img');
 
-let modalMarkup;
+galleryRef.addEventListener('click', onItemClick);
 
 function createGalleryItem(galleryItems) {
   return galleryItems
@@ -36,17 +37,13 @@ function onItemClick(event) {
   }
 
   const urlOriginalImage = event.target.dataset.source;
-  modalMarkup = createInstanceModal(urlOriginalImage);
 
+  setSrcImage(urlOriginalImage);
   openModal();
 }
 
-function createInstanceModal(url) {
-  const instance = basicLightbox.create(
-    `<img src="${url}" width="800" height="600">`,
-  );
-
-  return instance;
+function setSrcImage(url) {
+  modalImageRef.setAttribute('src', url);
 }
 
 function openModal() {
